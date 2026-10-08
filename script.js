@@ -3,7 +3,7 @@
 /* ============================================================
    Config
    ============================================================ */
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = "https://mental-health-score-cfrn.onrender.com";
 const PREDICT_URL = `${API_BASE}/predict`;
 const TIMEOUT_MS = 15000;
 const SCORE_MAX = 10; // gauge scale; adjust if your model's range differs
