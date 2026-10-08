@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Wellbeing Score Predictor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-orbs" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="page">
+    <header class="masthead">
+      <h1>Student wellbeing score predictor</h1>
+      <p>Enter a student's profile and daily habits. The trained model returns an estimated mental health score.</p>
+    </header>
+
+    <div class="layout">
+      <!-- ============ FORM ============ -->
+      <form id="predict-form" class="form-panel" novalidate>
+
+        <section class="group">
+          <h2><span class="icon i-profile" aria-hidden="true">👤</span>Profile</h2>
+          <div class="grid">
+            <div class="field" data-field="age">
+              <label for="age">Age</label>
+              <div class="input-wrap">
+                <input type="number" id="age" name="age" min="10" max="100" step="1" placeholder="e.g. 21" inputmode="numeric">
+                <span class="unit">years</span>
+              </div>
+              <p class="hint">Between 10 and 100</p>
+              <p class="error" role="alert"></p>
+            </div>
+
+            <div class="field" data-field="country">
+              <label for="country">Country</label>
+              <input type="text" id="country" name="country" list="country-list" placeholder="e.g. India" autocomplete="off">
+              <datalist id="country-list"></datalist>
+              <p class="hint">Pick from the list or type your own</p>
+              <p class="error" role="alert"></p>
+            </div>
+
+            <div class="field" data-field="gender">
+              <span class="label" id="gender-label">Gender</span>
+              <div class="segmented" role="radiogroup" aria-labelledby="gender-label">
+                <label><input type="radio" name="gender" value="Male"><span>Male</span></label>
+                <label><input type="radio" name="gender" value="Female"><span>Female</span></label>
+              </div>
+              <p class="error" role="alert"></p>
+            </div>
+
+            <div class="field" data-field="academic_level">
+              <span class="label" id="level-label">Academic level</span>
+              <div class="segmented" role="radiogroup" aria-labelledby="level-label">
+                <label><input type="radio" name="academic_level" value="High School"><span>High School</span></label>
+                <label><input type="radio" name="academic_level" value="Undergraduate"><span>Undergraduate</span></label>
+                <label><input type="radio" name="academic_level" value="Graduate"><span>Graduate</span></label>
+              </div>
+              <p class="error" role="alert"></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="group">
+          <h2><span class="icon i-social" aria-hidden="true">📱</span>Social media use</h2>
+          <div class="grid">
+            <div class="field" data-field="most_used_platform">
+              <label for="most_used_platform">Most used platform</label>
+              <select id="most_used_platform" name="most_used_platform">
+                <option value="" selected disabled>Select a platform</option>
+                <option>Facebook</option>
+                <option>Instagram</option>
+                <option>Twitter</option>
+                <option>TikTok</option>
+                <option>YouTube</option>
+                <option>Snapchat</option>
+                <option>WhatsApp</option>
+                <option>LinkedIn</option>
+                <option>WeChat</option>
+                <option>LINE</option>
+                <option>KakaoTalk</option>
+                <option>VKontakte</option>
+              </select>
+              <p class="error" role="alert"></p>
+            </div>
+
+            <div class="field" data-field="purpose_of_use">
+              <label for="purpose_of_use">Main purpose</label>
+              <select id="purpose_of_use" name="purpose_of_use">
+                <option value="" selected disabled>Select a purpose</option>
+                <option>Entertainment</option>
+                <option>Education</option>
+                <option>Networking</option>
+                <option>News</option>
+              </select>
+              <p class="error" role="alert"></p>
+            </div>
+
+            <div class="field" data-field="avg_daily_usage_hours">
+              <label for="avg_daily_usage_hours">Daily usage</label>
+              <div class="input-wrap">
+                <input type="number" id="avg_daily_usage_hours" name="avg_daily_usage_hours" min="0" max="24" step="0.1" placeholder="e.g. 4.5" inputmode="decimal">
+                <span class="unit">hrs/day</span>
+              </div>
+              <p class="error" role="alert"></p>
+            </div>
+
+            <div class="field" data-field="daily_unlocks">
+              <label for="daily_unlocks">Phone unlocks</label>
+              <div class="input-wrap">
+                <input type="number" id="daily_unlocks" name="daily_unlocks" min="0" step="1" placeholder="e.g. 80" inputmode="numeric">
+                <span class="unit">per day</span>
+              </div>
+              <p class="error" role="alert"></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="group">
+          <h2><span class="icon i-routine" aria-hidden="true">🌙</span>Daily routine</h2>
+          <div class="grid">
+            <div class="field" data-field="study_hours">
+              <label for="study_hours">Study time</label>
+              <div class="input-wrap">
+                <input type="number" id="study_hours" name="study_hours" min="0" max="24" step="0.1" placeholder="e.g. 3" inputmode="decimal">
+                <span class="unit">hrs/day</span>
+              </div>
+              <p class="error" role="alert"></p>
+            </div>
+
+            <div class="field" data-field="physical_activity_hours">
+              <label for="physical_activity_hours">Physical activity</label>
+              <div class="input-wrap">
+                <input type="number" id="physical_activity_hours" name="physical_activity_hours" min="0" max="24" step="0.1" placeholder="e.g. 1" inputmode="decimal">
+                <span class="unit">hrs/day</span>
+              </div>
+              <p class="error" role="alert"></p>
+            </div>
+
+            <div class="field" data-field="sleep_hours_per_night">
+              <label for="sleep_hours_per_night">Sleep</label>
+              <div class="input-wrap">
+                <input type="number" id="sleep_hours_per_night" name="sleep_hours_per_night" min="0" max="24" step="0.1" placeholder="e.g. 7" inputmode="decimal">
+                <span class="unit">hrs/night</span>
+              </div>
+              <p class="error" role="alert"></p>
+            </div>
+
+            <div class="field" data-field="stress_level">
+              <span class="label" id="stress-label">Stress level</span>
+              <div class="segmented" role="radiogroup" aria-labelledby="stress-label">
+                <label><input type="radio" name="stress_level" value="Low"><span>Low</span></label>
+                <label><input type="radio" name="stress_level" value="Medium"><span>Medium</span></label>
+                <label><input type="radio" name="stress_level" value="High"><span>High</span></label>
+                <label><input type="radio" name="stress_level" value="Very High"><span>Very High</span></label>
+              </div>
+              <p class="error" role="alert"></p>
+            </div>
+          </div>
+        </section>
+
+        <div class="actions">
+          <button type="submit" id="submit-btn" class="btn primary">
+            <span class="btn-label">Predict score</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
+          </button>
+          <button type="reset" id="reset-btn" class="btn ghost">Clear form</button>
+        </div>
+      </form>
+
+      <!-- ============ RESULT ============ -->
+      <aside id="result-panel" class="result-panel" aria-live="polite" aria-busy="false">
+
+        <div id="state-idle" class="state">
+          <svg class="gauge gauge-idle" viewBox="0 0 200 110" aria-hidden="true">
+            <path class="gauge-track" d="M 20 100 A 80 80 0 0 1 180 100" pathLength="100" />
+          </svg>
+          <h2>Your result will appear here</h2>
+          <p class="muted">Fill in every field, then select Predict score.</p>
+        </div>
+
+        <div id="state-loading" class="state" hidden>
+          <div class="loader" aria-hidden="true"><span></span><span></span><span></span></div>
+          <h2>Running the model</h2>
+          <p class="muted">Waiting for the API to respond…</p>
+        </div>
+
+        <div id="state-result" class="state" hidden>
+          <p class="result-title">Predicted mental health score</p>
+          <div class="gauge-wrap">
+            <svg class="gauge" viewBox="0 0 200 110" aria-hidden="true">
+              <defs>
+                <linearGradient id="grad-good" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#34f5a8"/></linearGradient>
+                <linearGradient id="grad-mid" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#ffc857"/></linearGradient>
+                <linearGradient id="grad-low" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff4d8d"/><stop offset="1" stop-color="#ff8a4c"/></linearGradient>
+              </defs>
+              <path class="gauge-track" d="M 20 100 A 80 80 0 0 1 180 100" pathLength="100" />
+              <path id="gauge-fill" class="gauge-fill" d="M 20 100 A 80 80 0 0 1 180 100" pathLength="100" />
+            </svg>
+            <div class="score-readout">
+              <span id="score-value" class="score-value">0.00</span>
+              <span class="score-max">out of 10</span>
+            </div>
+          </div>
+          <p id="band-label" class="band"></p>
+          <p id="band-text" class="muted band-text"></p>
+          <button type="button" id="again-btn" class="btn ghost small">Predict another</button>
+          <p class="disclaimer">This is a statistical estimate from a student dataset. It is not a diagnosis or medical advice.</p>
+        </div>
+
+        <div id="state-error" class="state" hidden>
+          <div class="error-icon" aria-hidden="true">!</div>
+          <h2 id="error-title">Something went wrong</h2>
+          <p id="error-message" class="muted"></p>
+          <ul id="error-list" class="error-list" hidden></ul>
+          <button type="button" id="retry-btn" class="btn ghost small">Try again</button>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
